@@ -1,0 +1,48 @@
+1math module taskss
+import math
+from math import factorial, gcd, floor, ceil
+
+print(math.sqrt(144))
+print(math.pow(5,3))
+print(factorial(6))
+print(floor(5.8))
+print(gcd(24,36))
+print(ceil(5.2))
+tasck 3
+import datetime
+print(datetime.date.today())
+print(datetime.datetime.now().time())
+print(datetime.datetime.now().year)
+dob=int(input("enter birthday year:")                             )
+age=datetime.datetime.now().year - dob
+print(age)
+task 4
+import calendar as c
+print(c.month(2026,7))
+print(c.calendar(2026))
+print(c.isleap(2024))
+print(c.isleap(2025))
+print(c.isleap(2028))
+pywhatkit
+import pywhatkit as kit
+kit.sendwhatmsg("+968885458"."hello")
+kit.search("python programming")
+kit.playonyt("thalapathy vijay")
+import random as r
+print(r.randint(1, 100))
+print(r.randint(100000,9999999))
+print("dice":,r.randint(1, 6))
+numpy
+import numpy as np
+arr=np.array([10,20,30,40,50])
+print(arr)
+arr=np.array([10,20,30,40,50])
+print(np.sum(arr))
+arr=np.array([10,20,30,40,50])
+print(np.sum(arr))
+print(np.mean(arr))
+arr=np.array([10,20,30,40,50])
+print(np.mean(arr))
+print(np.max(arr))
+print(np.min(arr))
+
