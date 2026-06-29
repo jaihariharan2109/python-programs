@@ -1,0 +1,139 @@
+from tkinter import *
+from tkinter import messagebox
+import random
+
+# ---------------- Main Window ----------------
+root = Tk()
+root.title("Flight Ticket Booking System")
+root.geometry("600x700")
+root.configure(bg="#d9f3ff")
+
+# ---------------- Heading ----------------
+Label(root, text="FLIGHT TICKET BOOKING SYSTEM",
+      font=("Arial", 18, "bold"),
+      bg="#0077b6", fg="white",
+      pady=10).pack(fill=X)
+
+# ---------------- Passenger Name ----------------
+Label(root, text="Passenger Name", font=("Arial", 11, "bold"), bg="#d9f3ff").place(x=50, y=70)
+name_entry = Entry(root, width=30)
+name_entry.place(x=250, y=70)
+
+# ---------------- Gender ----------------
+Label(root, text="Gender", font=("Arial", 11, "bold"), bg="#d9f3ff").place(x=50, y=110)
+gender_var = StringVar(value="Male")
+Radiobutton(root, text="Male", variable=gender_var, value="Male", bg="#d9f3ff").place(x=250, y=110)
+Radiobutton(root, text="Female", variable=gender_var, value="Female", bg="#d9f3ff").place(x=330, y=110)
+Radiobutton(root, text="Other", variable=gender_var, value="Other", bg="#d9f3ff").place(x=430, y=110)
+
+# ---------------- Phone ----------------
+Label(root, text="Phone Number", font=("Arial", 11, "bold"), bg="#d9f3ff").place(x=50, y=150)
+phone_entry = Entry(root, width=30)
+phone_entry.place(x=250, y=150)
+
+# ---------------- From ----------------
+Label(root, text="From City", font=("Arial", 11, "bold"), bg="#d9f3ff").place(x=50, y=190)
+from_var = StringVar(value="Chennai")
+OptionMenu(root, from_var,
+           "Chennai", "Bangalore", "Hyderabad", "Mumbai", "Delhi", "Kolkata", "Goa").place(x=250, y=185)
+
+# ---------------- To ----------------
+Label(root, text="To City", font=("Arial", 11, "bold"), bg="#d9f3ff").place(x=50, y=230)
+to_var = StringVar(value="Delhi")
+OptionMenu(root, to_var,
+           "Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Goa").place(x=250, y=225)
+
+# ---------------- Date ----------------
+Label(root, text="Journey Date", font=("Arial", 11, "bold"), bg="#d9f3ff").place(x=50, y=270)
+date_var = StringVar(value="01-07-2026")
+OptionMenu(root, date_var,
+           "01-07-2026", "02-07-2026", "03-07-2026", "04-07-2026").place(x=250, y=265)
+
+# ---------------- Time ----------------
+Label(root, text="Flight Time", font=("Arial", 11, "bold"), bg="#d9f3ff").place(x=50, y=310)
+time_var = StringVar(value="09:00 AM")
+OptionMenu(root, time_var,
+           "06:00 AM", "09:00 AM", "12:00 PM", "03:00 PM", "06:00 PM").place(x=250, y=305)
+
+# ---------------- Seat Class ----------------
+Label(root, text="Seat Class", font=("Arial", 11, "bold"), bg="#d9f3ff").place(x=50, y=350)
+seat_class = StringVar(value="Economy")
+Radiobutton(root, text="Economy (₹5000)", variable=seat_class,
+            value="Economy", bg="#d9f3ff").place(x=250, y=350)
+Radiobutton(root, text="Business (₹9000)", variable=seat_class,
+            value="Business", bg="#d9f3ff").place(x=400, y=350)
+
+# ---------------- Passengers ----------------
+Label(root, text="Passengers", font=("Arial", 11, "bold"), bg="#d9f3ff").place(x=50, y=390)
+passenger_spin = Spinbox(root, from_=1, to=10, width=5)
+passenger_spin.place(x=250, y=390)
+
+# ---------------- Payment ----------------
+Label(root, text="Payment Method", font=("Arial", 11, "bold"), bg="#d9f3ff").place(x=50, y=430)
+payment_var = StringVar(value="UPI")
+Radiobutton(root, text="UPI", variable=payment_var, value="UPI", bg="#d9f3ff").place(x=250, y=430)
+Radiobutton(root, text="Card", variable=payment_var, value="Card", bg="#d9f3ff").place(x=320, y=430)
+Radiobutton(root, text="Net Banking", variable=payment_var, value="Net Banking", bg="#d9f3ff").place(x=390, y=430)
+
+# ---------------- Booking Function ----------------
+def book_flight():
+    name = name_entry.get().strip()
+    phone = phone_entry.get().strip()
+
+    if name == "" or phone == "":
+        messagebox.showerror("Error", "Please enter Name and Phone Number")
+        return
+
+    if not phone.isdigit() or len(phone) != 10:
+        messagebox.showerror("Error", "Enter a valid 10-digit phone number")
+        return
+
+    if from_var.get() == to_var.get():
+        messagebox.showerror("Error", "From City and To City cannot be the same")
+        return
+
+    passengers = int(passenger_spin.get())
+
+    fare = 5000 if seat_class.get() == "Economy" else 9000
+    total = fare * passengers
+
+    booking_id = "FL" + str(random.randint(100000, 999999))
+    flight_no = random.choice(["AI101", "6E245", "SG510", "UK880"])
+    seat_no = random.randint(1, 180)
+
+    ticket = f"""
+******** FLIGHT TICKET ********
+
+Booking ID : {booking_id}
+Flight No  : {flight_no}
+
+Passenger  : {name}
+Gender     : {gender_var.get()}
+Phone      : {phone}
+
+Route      : {from_var.get()} ➜ {to_var.get()}
+Date       : {date_var.get()}
+Time       : {time_var.get()}
+
+Seat No    : {seat_no}
+Class      : {seat_class.get()}
+
+Passengers : {passengers}
+Payment    : {payment_var.get()}
+
+Total Fare : ₹{total}
+
+Have a Safe Journey!
+
+******************************
+"""
+
+    messagebox.showinfo("Booking Confirmed", ticket)
+
+# ---------------- Button ----------------
+Button(root,
+       text="BOOK FLIGHT",
+       font=("Arial", 14, "bold"),
+       bg="green",
+       fg="white",
+       command=book_flight).place(x=210, y=500)
